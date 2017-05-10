@@ -24,7 +24,7 @@ void PlayState::init()
         exit(1);
     }
     text.setFont(font);
-    text.setString(L"Testing text output in SFML");
+    text.setString(L"Points: ");
     text.setCharacterSize(24); // in pixels
     text.setFillColor(sf::Color::Yellow);
     text.setStyle(sf::Text::Bold | sf::Text::Underlined);
@@ -37,10 +37,11 @@ void PlayState::init()
     walkStates[1] = "walk-left";
     walkStates[2] = "walk-up";
     walkStates[3] = "walk-down";
-    currentDir = RIGHT;
-    //player.load("data/img/airplane.png",64,64,0,0,0,0,13,21,273);
+    //currentDir = RIGHT;
+    currentDir = UP;
+
     player.load("data/img/airplane2.png",80,56,0,0,0,0,1 ,1);
-    player.setPosition(40,100);
+    player.setPosition(300,25000);
     player.loadAnimation("data/img/warrioranim.xml");
     player.setAnimation(walkStates[currentDir]);
     player.setAnimRate(30);
@@ -87,6 +88,8 @@ void PlayState::handleEvents(cgf::Game* game)
 {
     screen = game->getScreen();
     sf::View view = screen->getView(); // gets the view
+    /*sf::Vector2f viewCenter = view.getCenter();
+    cout << viewCenter << endl;*/
     sf::Event event;
 
     while (screen->pollEvent(event))
