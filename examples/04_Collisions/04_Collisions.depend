@@ -2391,7 +2391,7 @@
 	"PlayState.h"
 	"InputManager.h"
 
-1494506200 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\main.cpp
+1494523708 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\main.cpp
 	<iostream>
 	<cstdlib>
 	<string>
@@ -2982,7 +2982,7 @@
 1494506201 c:\users\mathias\documents\github\river-raid\lib\cgf\include\debug.h
 	<iostream>
 
-1494521965 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.cpp
+1494523317 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.cpp
 	<iostream>
 	<cmath>
 	"Game.h"

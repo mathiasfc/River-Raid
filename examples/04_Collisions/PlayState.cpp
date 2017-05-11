@@ -99,6 +99,7 @@ void PlayState::handleEvents(cgf::Game* game)
     sf::Event event;
     if(bAjustaZoom){
         view.zoom(1.6);
+        view.setViewport(sf::FloatRect(0.0f, 0.00f, 1.0f, 0.80f));
         screen->setView(view);
         bAjustaZoom = false;
     }
@@ -161,13 +162,17 @@ void PlayState::handleEvents(cgf::Game* game)
     //player.setYspeed(100*(-3));
 
     player.setXspeed(100*dirx);
-    player.setYspeed(100*diry);
+    player.setYspeed(700*diry);
 }
 
 void PlayState::update(cgf::Game* game)
 {
     screen = game->getScreen();
-    checkCollision(2, game, &player);
+    if(checkCollision(2, game, &player)){
+        //printf("collision");
+    }else{
+        //printf("no collision");
+    }
 //    player.update(game->getUpdateInterval());
     centerMapOnPlayer();
 }
