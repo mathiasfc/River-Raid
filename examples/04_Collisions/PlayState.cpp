@@ -41,7 +41,7 @@ void PlayState::init()
     currentDir = UP;
 
     player.load("data/img/airplane2.png",80,56,0,0,0,0,1 ,1);
-    player.setPosition(300,25000);
+    player.setPosition(475,25000);
     player.loadAnimation("data/img/warrioranim.xml");
     player.setAnimation(walkStates[currentDir]);
     player.setAnimRate(30);
@@ -83,6 +83,8 @@ void PlayState::resume()
 {
     cout << "PlayState: Resumed" << endl;
 }
+
+float zoom = 0;
 
 void PlayState::handleEvents(cgf::Game* game)
 {
@@ -128,7 +130,7 @@ void PlayState::handleEvents(cgf::Game* game)
         game->toggleStats();
 
     if(im->testEvent("zoomin")) {
-        view.zoom(1.01);
+        view.zoom(1.001);
         screen->setView(view);
     }
     else if(im->testEvent("zoomout")) {
@@ -191,7 +193,8 @@ void PlayState::centerMapOnPlayer()
     if(panY >= mapsize.y - viewsize.y)
         panY = mapsize.y - viewsize.y;
 
-    sf::Vector2f center(panX,panY);
+    sf::Vector2f center(panX+40,panY);
+
     view.setCenter(center);
     screen->setView(view);
 }
