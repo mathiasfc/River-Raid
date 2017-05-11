@@ -14,7 +14,7 @@
 #include "InputManager.h"
 
 PlayState PlayState::m_PlayState;
-
+bool bAjustaZoom = true;
 using namespace std;
 
 void PlayState::init()
@@ -40,9 +40,11 @@ void PlayState::init()
     //currentDir = RIGHT;
     currentDir = UP;
 
+
+
     player.load("data/img/airplane2.png",80,56,0,0,0,0,1 ,1);
     player.setPosition(475,25000);
-    player.loadAnimation("data/img/warrioranim.xml");
+    //player.loadAnimation("data/img/warrioranim.xml");
     player.setAnimation(walkStates[currentDir]);
     player.setAnimRate(30);
     player.setScale(1,1);
@@ -64,6 +66,8 @@ void PlayState::init()
     // Camera control
     im->addKeyInput("zoomin", sf::Keyboard::Z);
     im->addKeyInput("zoomout", sf::Keyboard::X);
+
+
 
     cout << "PlayState: Init" << endl;
 }
@@ -93,6 +97,11 @@ void PlayState::handleEvents(cgf::Game* game)
     /*sf::Vector2f viewCenter = view.getCenter();
     cout << viewCenter << endl;*/
     sf::Event event;
+    if(bAjustaZoom){
+        view.zoom(1.6);
+        screen->setView(view);
+        bAjustaZoom = false;
+    }
 
     while (screen->pollEvent(event))
     {
@@ -148,6 +157,8 @@ void PlayState::handleEvents(cgf::Game* game)
         }
         player.play();
     }
+
+    //player.setYspeed(100*(-3));
 
     player.setXspeed(100*dirx);
     player.setYspeed(100*diry);
