@@ -14,7 +14,7 @@
 #include "InputManager.h"
 
 PlayState PlayState::m_PlayState;
-bool bAjustaZoom = true;
+bool bAjustesTelaInicial = true;
 using namespace std;
 
 void PlayState::init()
@@ -97,11 +97,13 @@ void PlayState::handleEvents(cgf::Game* game)
     /*sf::Vector2f viewCenter = view.getCenter();
     cout << viewCenter << endl;*/
     sf::Event event;
-    if(bAjustaZoom){
+    if(bAjustesTelaInicial){
         view.zoom(1.6);
         view.setViewport(sf::FloatRect(0.0f, 0.00f, 1.0f, 0.80f));
+        //rectangle.setSize(sf::Vector2f(800, 100));
+        //rectangle.setPosition(0,9500);
         screen->setView(view);
-        bAjustaZoom = false;
+        bAjustesTelaInicial = false;
     }
 
     while (screen->pollEvent(event))
@@ -184,6 +186,7 @@ void PlayState::draw(cgf::Game* game)
 //    map->Draw(*screen, 1);     // draw only the second layer
     screen->draw(player);
     screen->draw(text);
+    screen->draw(rectangle);
 }
 
 void PlayState::centerMapOnPlayer()

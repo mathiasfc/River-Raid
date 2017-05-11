@@ -2912,7 +2912,7 @@
 	<SFML/System/Time.hpp>
 	<SFML/System/Clock.hpp>
 
-1494506200 c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.h
+1494525479 c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.h
 	"GameState.h"
 	"Sprite.h"
 	"InputManager.h"
@@ -2982,7 +2982,7 @@
 1494506201 c:\users\mathias\documents\github\river-raid\lib\cgf\include\debug.h
 	<iostream>
 
-1494523317 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.cpp
+1494525115 source:c:\users\mathias\documents\github\river-raid\examples\04_collisions\playstate.cpp
 	<iostream>
 	<cmath>
 	"Game.h"
