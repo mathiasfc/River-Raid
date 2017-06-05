@@ -51,7 +51,7 @@ void PlayState::init()
     player.play();
 
     dirx = 0; // sprite dir: right (1), left (-1)
-    diry = 0; // down (1), up (-1)
+    diry = -1; // down (1), up (-1)
 
     im = cgf::InputManager::instance();
 
@@ -98,8 +98,8 @@ void PlayState::handleEvents(cgf::Game* game)
     cout << viewCenter << endl;*/
     sf::Event event;
     if(bAjustesTelaInicial){
-        view.zoom(1.6);
-        view.setViewport(sf::FloatRect(0.0f, 0.00f, 1.0f, 0.80f));
+        view.zoom(1.75);
+        view.setViewport(sf::FloatRect(0.0f, 0.00f, 1.055f, 1.0f));
         //rectangle.setSize(sf::Vector2f(800, 100));
         //rectangle.setPosition(0,9500);
         screen->setView(view);
@@ -112,26 +112,27 @@ void PlayState::handleEvents(cgf::Game* game)
             game->quit();
     }
 
-    dirx = diry = 0;
+    dirx = 0;
+    diry = -0.6;
     int newDir = currentDir;
 
     if(im->testEvent("left")) {
-        dirx = -1;
+        dirx = -2;
         newDir = LEFT;
     }
 
     if(im->testEvent("right")) {
-        dirx = 1;
+        dirx = 2;
         newDir = RIGHT;
     }
 
     if(im->testEvent("up")) {
-        diry = -1;
+        diry += -0.1;
         newDir = UP;
     }
 
     if(im->testEvent("down")) {
-        diry = 1;
+        diry += 0.3;
         newDir = DOWN;
     }
 
@@ -186,7 +187,7 @@ void PlayState::draw(cgf::Game* game)
 //    map->Draw(*screen, 1);     // draw only the second layer
     screen->draw(player);
     screen->draw(text);
-    screen->draw(rectangle);
+    //screen->draw(rectangle);
 }
 
 void PlayState::centerMapOnPlayer()
@@ -394,7 +395,7 @@ bool PlayState::checkCollision(uint8_t layer, cgf::Game* game, cgf::Sprite* obj)
 // Get a cell GID from the map (x and y in global coords)
 sf::Uint16 PlayState::getCellFromMap(uint8_t layernum, float x, float y)
 {
-    auto layers = map->GetLayers();
+    auto& layers = map->GetLayers();
     tmx::MapLayer& layer = layers[layernum];
     sf::Vector2u mapsize = map->GetMapSize();
     sf::Vector2u tilesize = map->GetMapTileSize();

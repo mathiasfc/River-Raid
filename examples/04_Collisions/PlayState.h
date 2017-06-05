@@ -49,7 +49,7 @@ class PlayState : public cgf::GameState
     int currentDir;
 
     int x, y;
-    int dirx, diry;
+    float dirx, diry;
 
     cgf::Sprite player;
 
@@ -60,7 +60,6 @@ class PlayState : public cgf::GameState
 
     sf::Font font;
     sf::Text text;
-    sf::RectangleShape rectangle;
 
     // Centers the camera on the player position
     void centerMapOnPlayer();
