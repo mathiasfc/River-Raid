@@ -16,6 +16,7 @@
 PlayState PlayState::m_PlayState;
 bool bAjustesTelaInicial = true;
 using namespace std;
+//sf::CircleShape shape(100.f);
 
 void PlayState::init()
 {
@@ -41,8 +42,8 @@ void PlayState::init()
     currentDir = UP;
 
 
-
-    player.load("data/img/airplane2.png",80,56,0,0,0,0,1 ,1);
+    //Plane configs
+    player.load("data/img/airplane2.png",80,56,0,0,0,0,1,1);
     player.setPosition(475,25000);
     //player.loadAnimation("data/img/warrioranim.xml");
     player.setAnimation(walkStates[currentDir]);
@@ -50,8 +51,22 @@ void PlayState::init()
     player.setScale(1,1);
     player.play();
 
+    shot_direction = "up";
+
+    //Plane-shot configs
+    planeShot.load("data/img/plane_fire.png",38,24,0,0,0,0,1,1);
+    planeShot.setPosition(player.getPosition().x, 0);
+    planeShot.setAnimation(shot_direction);
+    planeShot.setAnimRate(30);
+    planeShot.setScale(1,1);
+    planeShot.play();
+
+
     dirx = 0; // sprite dir: right (1), left (-1)
     diry = -1; // down (1), up (-1)
+    fired = false; //did the plane fired?
+    dirshotx = 0; //always 0
+    dirshoty = -2; //up always
 
     im = cgf::InputManager::instance();
 
@@ -61,6 +76,7 @@ void PlayState::init()
     im->addKeyInput("down", sf::Keyboard::Down);
     im->addKeyInput("quit", sf::Keyboard::Escape);
     im->addKeyInput("stats", sf::Keyboard::S);
+    im->addKeyInput("shot", sf::Keyboard::Space);
     im->addMouseInput("rightclick", sf::Mouse::Right);
 
     // Camera control
@@ -100,8 +116,7 @@ void PlayState::handleEvents(cgf::Game* game)
     if(bAjustesTelaInicial){
         view.zoom(1.75);
         view.setViewport(sf::FloatRect(0.0f, 0.00f, 1.055f, 1.0f));
-        //rectangle.setSize(sf::Vector2f(800, 100));
-        //rectangle.setPosition(0,9500);
+
         screen->setView(view);
         bAjustesTelaInicial = false;
     }
@@ -113,7 +128,11 @@ void PlayState::handleEvents(cgf::Game* game)
     }
 
     dirx = 0;
-    diry = -0.6;
+    diry = -0.5;
+    fired = false;
+    dirshotx = 0;
+    dirshoty = -2;
+
     int newDir = currentDir;
 
     if(im->testEvent("left")) {
@@ -132,7 +151,7 @@ void PlayState::handleEvents(cgf::Game* game)
     }
 
     if(im->testEvent("down")) {
-        diry += 0.3;
+        diry += 0.1;
         newDir = DOWN;
     }
 
@@ -151,6 +170,12 @@ void PlayState::handleEvents(cgf::Game* game)
         screen->setView(view);
     }
 
+    if(im->testEvent("shot")){
+        cout << "Plane fired" << endl;
+        fired = true;
+        dirshoty += -3;
+    }
+
     if(dirx == 0 && diry == 0) {
         player.pause();
     }
@@ -162,17 +187,18 @@ void PlayState::handleEvents(cgf::Game* game)
         player.play();
     }
 
-    //player.setYspeed(100*(-3));
-
     player.setXspeed(100*dirx);
     player.setYspeed(700*diry);
+
+    planeShot.setXspeed(0);
+    planeShot.setYspeed(750*dirshoty);
 }
 
 void PlayState::update(cgf::Game* game)
 {
     screen = game->getScreen();
     if(checkCollision(2, game, &player)){
-        //printf("collision");
+        printf("collision");
     }else{
         //printf("no collision");
     }
@@ -187,7 +213,10 @@ void PlayState::draw(cgf::Game* game)
 //    map->Draw(*screen, 1);     // draw only the second layer
     screen->draw(player);
     screen->draw(text);
-    //screen->draw(rectangle);
+
+    if(fired){
+        screen->draw(planeShot);
+    }
 }
 
 void PlayState::centerMapOnPlayer()

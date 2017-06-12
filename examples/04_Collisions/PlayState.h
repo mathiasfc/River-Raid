@@ -48,10 +48,14 @@ class PlayState : public cgf::GameState
     std::string walkStates[4];
     int currentDir;
 
+    std::string shot_direction;
+    bool fired;
+
     int x, y;
-    float dirx, diry;
+    float dirx, diry, dirshotx, dirshoty;
 
     cgf::Sprite player;
+    cgf::Sprite planeShot;
 
     sf::RenderWindow* screen;
     cgf::InputManager* im;
